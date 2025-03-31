@@ -1,15 +1,14 @@
+import 'dart:ui'; // potrzebne do BackdropFilter
 import 'package:flutter/material.dart';
+import 'package:phobia_app/screens/exposure_loading_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:phobia_app/theme_provider.dart';
-import 'package:phobia_app/screens/relax_screen.dart';
-import 'exposure_screen.dart';
 import 'journal_screen.dart';
 import 'info_screen.dart';
-import 'exposure_levels_screen.dart';
-import 'exposure_levels_screen.dart';
+import 'relax_loading_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -44,18 +43,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       opacity: _fadeAnimation,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: const Color(0xFFC6E1FD),
-            minimumSize: const Size.fromHeight(60),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          ),
-          icon: Icon(icon, size: 24, color: Colors.white),
-          label: Text(text, style: const TextStyle(fontSize: 18)),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => screen),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white.withOpacity(0.15),
+                foregroundColor: Colors.white,
+                minimumSize: const Size.fromHeight(60),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                elevation: 0,
+              ),
+              icon: Icon(icon, size: 24, color: Colors.white),
+              label: Text(text, style: const TextStyle(fontSize: 18, color: Colors.white)),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => screen),
+              ),
+            ),
           ),
         ),
       ),
@@ -67,10 +73,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
 
+    final gradientColors = isDarkMode
+        ? [const Color(0xFF4DA2E8), const Color(0xFF2575FC)]
+        : [const Color(0xFFB3CCF4), const Color(0xFFCFDEF3)];
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor ?? Theme.of(context).primaryColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: const Text(
           "Menu",
           style: TextStyle(
@@ -96,18 +108,27 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildMenuButton("Ekspozycja", Icons.bug_report, const ExposureLevelsScreen()),
-              _buildMenuButton("Dziennik", Icons.book, JournalScreen()),
-              _buildMenuButton("Relaks", Icons.self_improvement, const RelaxScreen()),
-              _buildMenuButton("Info", Icons.info_outline, const InfoScreen()),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: gradientColors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(15.0, 100.0, 15.0, 15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildMenuButton("Ekspozycja", Icons.bug_report, const ExposureLoadingScreen()),
+                _buildMenuButton("Dziennik", Icons.book, JournalScreen()),
+                _buildMenuButton("Relaks", Icons.self_improvement, const RelaxLoadingScreen(isFromExposure: false)),
+                _buildMenuButton("Info", Icons.info_outline, const InfoScreen()),
+              ],
+            ),
           ),
         ),
       ),

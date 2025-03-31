@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592728998318",
+    "project_id": "phobia-apka",
+    "storage_bucket": "phobia-apka.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592728998318:android:fa376b9bd20c95c95a483f",
+        "android_client_info": {
+          "package_name": "com.example.phobia_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUbcjTrqzlmDaAA7BRxnXcKqMqspUC1Ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

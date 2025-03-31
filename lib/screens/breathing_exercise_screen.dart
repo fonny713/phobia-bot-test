@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'breathing_exercise_screen_wrapper.dart';
 
 class BreathingExerciseScreen extends StatefulWidget {
   final VoidCallback onDone;
-  const BreathingExerciseScreen({super.key, required this.onDone});
+  final bool isFromExposure;
+  const BreathingExerciseScreen({
+    super.key, 
+    required this.onDone,
+    this.isFromExposure = false,
+  });
 
   @override
   State<BreathingExerciseScreen> createState() => _BreathingExerciseScreenState();
@@ -56,16 +60,14 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ćwiczenie oddechowe"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                widget.onDone(); // PRZECHODZI DO EKRANU ekspozycji!
-              },
-              child: const Text("Pomiń"),
-            ),
-
-          ]
-
+        actions: widget.isFromExposure ? [
+          TextButton(
+            onPressed: () {
+              widget.onDone();
+            },
+            child: const Text("Pomiń"),
+          ),
+        ] : null,
       ),
       backgroundColor: Colors.white,
       body: Center(

@@ -3,8 +3,15 @@ import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'screens/home_screen.dart';
 import 'widgets/fade_transition_switcher.dart'; // Importujemy nasz widget
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart' as firebase_options;
+import 'screens/registration_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: firebase_options.DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
@@ -79,8 +86,8 @@ class MyApp extends StatelessWidget {
         themeMode: themeProvider.themeMode,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: const FadeTransitionSwitcher(
-          child: HomeScreen(),
+        home:  FadeTransitionSwitcher(
+          child: const RegistrationScreen(key: ValueKey('registrationScreen')),
         ),
       ),
     );

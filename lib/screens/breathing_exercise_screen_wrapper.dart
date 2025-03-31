@@ -4,8 +4,13 @@ import 'breathing_exercise_screen.dart';
 
 class BreathingExerciseScreenWrapper extends StatefulWidget {
   final VoidCallback onDone;
+  final bool isFromExposure; // Określa, czy użytkownik przyszedł z ekspozycji
 
-  const BreathingExerciseScreenWrapper({Key? key, required this.onDone}) : super(key: key);
+  const BreathingExerciseScreenWrapper({
+    super.key,
+    required this.onDone,
+    required this.isFromExposure,
+  });
 
   @override
   State<BreathingExerciseScreenWrapper> createState() => _BreathingExerciseScreenWrapperState();
@@ -30,28 +35,41 @@ class _BreathingExerciseScreenWrapperState extends State<BreathingExerciseScreen
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // 👇 USUNIĘTO `const`, żeby móc przekazać onDone
-        BreathingExerciseScreen(onDone: widget.onDone),
-        Positioned(
-          top: 40,
-          right: 20,
-          child: TextButton(
-            onPressed: () {
-              _timer?.cancel(); // Anuluj automatyczne przejście
-              widget.onDone();  // Przejdź natychmiast
-            },
-            child: const Text(
-              "",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+    return Scaffold(
+      body: Stack(
+        children: [
+          BreathingExerciseScreen(onDone: widget.onDone),
+          
+          // Przycisk "Pomiń" pojawia się tylko, jeśli użytkownik przyszedł z ekspozycji
+          if (widget.isFromExposure)
+            Positioned(
+              top: 100, // Umieszczamy przycisk bliżej dolnej krawędzi
+              right: 20,
+              child: ElevatedButton(
+                onPressed: () {
+                  _timer?.cancel(); // Anuluj automatyczne przejście
+                  widget.onDone();  // Przejdź od razu
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 5,
+                  shadowColor: Colors.black26,
+                ),
+                child: const Text(
+                  "Pomiń",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

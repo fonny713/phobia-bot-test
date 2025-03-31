@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class JournalScreen extends StatefulWidget {
+  const JournalScreen({super.key});
+
   @override
   _JournalScreenState createState() => _JournalScreenState();
 }

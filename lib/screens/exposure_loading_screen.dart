@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'breathing_exercise_screen.dart';
+import 'exposure_levels_screen.dart'; // Zmień na właściwy ekran ekspozycji
 
-class RelaxLoadingScreen extends StatefulWidget {
-  final bool isFromExposure;
-  const RelaxLoadingScreen({super.key, this.isFromExposure = false});
+class ExposureLoadingScreen extends StatefulWidget {
+  const ExposureLoadingScreen({super.key});
 
   @override
-  State<RelaxLoadingScreen> createState() => _RelaxLoadingScreenState();
+  State<ExposureLoadingScreen> createState() => _ExposureLoadingScreenState();
 }
 
-class _RelaxLoadingScreenState extends State<RelaxLoadingScreen>
+class _ExposureLoadingScreenState extends State<ExposureLoadingScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _progressAnimation;
@@ -32,13 +31,7 @@ class _RelaxLoadingScreenState extends State<RelaxLoadingScreen>
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 600),
-            pageBuilder: (_, __, ___) => BreathingExerciseScreen(
-              onDone: () {
-                // Co ma się stać po zakończeniu ćwiczenia oddechowego?
-                Navigator.of(context).pop(); // lub inna logika
-              },
-            ),
-
+            pageBuilder: (_, __, ___) => const ExposureLevelsScreen(), // Zmień na właściwy ekran
             transitionsBuilder: (_, animation, __, child) {
               final offsetAnimation = Tween<Offset>(
                 begin: const Offset(0, 0.1),
@@ -81,7 +74,7 @@ class _RelaxLoadingScreenState extends State<RelaxLoadingScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Ładowanie relaksu...",
+                    "Ładowanie ekspozycji...",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,

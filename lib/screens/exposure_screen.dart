@@ -22,13 +22,13 @@ class _ExposureScreenState extends State<ExposureScreen>
   late int _currentLevel;
   late ConfettiController _confettiController;
 
-  double _emotionValue = 5.0; // ⬅️ dodaj na górze klasy
+  final double _emotionValue = 5.0; // ⬅️ dodaj na górze klasy
   double _postEmotionValue = 5.0; // ⬅️ nowa zmienna do slidera po ekspozycji
 
 
   Future<void> _saveEmotionRating(int difficulty, int level, double value) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'emotion_difficulty_${difficulty}_level_${level}';
+    final key = 'emotion_difficulty_${difficulty}_level_$level';
     await prefs.setDouble(key, value);
     print("Zapisano $key = ${value.toStringAsFixed(1)}");
   }
@@ -286,11 +286,10 @@ class _AnimatedGlassButton extends StatefulWidget {
   final IconData icon;
 
   const _AnimatedGlassButton({
-    Key? key,
     required this.onTap,
     required this.label,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   State<_AnimatedGlassButton> createState() => _AnimatedGlassButtonState();

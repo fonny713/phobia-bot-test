@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FadeTransitionSwitcher extends StatefulWidget {
   final Widget child;
 
-  const FadeTransitionSwitcher({Key? key, required this.child}) : super(key: key);
+  const FadeTransitionSwitcher({super.key, required this.child});
 
   @override
   State<FadeTransitionSwitcher> createState() => _FadeTransitionSwitcherState();
