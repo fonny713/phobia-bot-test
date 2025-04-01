@@ -13,12 +13,12 @@ class ExposureLevelsScreen extends StatefulWidget {
 class _ExposureLevelsScreenState extends State<ExposureLevelsScreen> {
   int _unlockedLevel = 1; // Default: only first level is unlocked
 
-  final List<Map<String, dynamic>> _difficultyData = [
-    {'label': 'Bardzo łatwy', 'icon': Icons.bug_report},
-    {'label': 'Łatwy', 'icon': Icons.pest_control},
-    {'label': 'Średni', 'icon': Icons.warning_amber},
-    {'label': 'Trudny', 'icon': Icons.dangerous},
-    {'label': 'Bardzo trudny', 'icon': Icons.king_bed},
+  final List<Map<String, dynamic>> _levels = [
+    {'label': 'Very Easy', 'icon': Icons.bug_report},
+    {'label': 'Easy', 'icon': Icons.pest_control},
+    {'label': 'Medium', 'icon': Icons.warning_amber},
+    {'label': 'Hard', 'icon': Icons.dangerous},
+    {'label': 'Very Hard', 'icon': Icons.king_bed},
   ];
 
   void _navigateToDifficulty(int index) {
@@ -76,7 +76,7 @@ class _ExposureLevelsScreenState extends State<ExposureLevelsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: _difficultyData.asMap().entries.map((entry) {
+              children: _levels.asMap().entries.map((entry) {
                 int index = entry.key;
                 var data = entry.value;
                 final isUnlocked = index + 1 <= _unlockedLevel;

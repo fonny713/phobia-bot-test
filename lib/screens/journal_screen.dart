@@ -8,44 +8,44 @@ class JournalScreen extends StatefulWidget {
 }
 
 class _JournalScreenState extends State<JournalScreen> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _entryController = TextEditingController();
   final List<String> _entries = [];
 
   void _saveEntry() {
-    if (_controller.text.trim().isEmpty) return;
+    if (_entryController.text.trim().isEmpty) return;
 
     setState(() {
-      _entries.insert(0, _controller.text.trim());
-      _controller.clear();
+      _entries.insert(0, _entryController.text.trim());
+      _entryController.clear();
     });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _entryController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dziennik emocji')),
+      appBar: AppBar(title: const Text('Emotion Journal')),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
-              controller: _controller,
-              maxLines: 3,
-              decoration: InputDecoration(
-                hintText: 'Jak się teraz czujesz?',
+              controller: _entryController,
+              maxLines: 5,
+              decoration: const InputDecoration(
+                hintText: 'Write about your emotions and thoughts...',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _saveEntry,
-              child: Text('Zapisz wpis'),
+              child: const Text('Save Entry'),
             ),
             SizedBox(height: 16),
             Expanded(

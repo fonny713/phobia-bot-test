@@ -47,7 +47,7 @@ class _BreathingExerciseScreenWrapperState extends State<BreathingExerciseScreen
               right: 20,
               child: ElevatedButton(
                 onPressed: () {
-                  _timer?.cancel(); // Anuluj automatyczne przejście
+                  _timer?.cancel(); // Cancel automatic transition
                   widget.onDone();  // Przejdź od razu
                 },
                 style: ElevatedButton.styleFrom(
