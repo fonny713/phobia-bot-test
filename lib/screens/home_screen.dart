@@ -507,51 +507,202 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showDifficultyDialog(BuildContext context, Phobia phobia) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Choose Difficulty Level for ${phobia.name}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildDifficultyButton(context, 'Easy', Colors.green, phobia),
-            const SizedBox(height: 8),
-            _buildDifficultyButton(context, 'Medium', Colors.orange, phobia),
-            const SizedBox(height: 8),
-            _buildDifficultyButton(context, 'Hard', Colors.red, phobia),
-          ],
-        ),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
-    );
-  }
-
-  Widget _buildDifficultyButton(BuildContext context, String level, Color color, Phobia phobia) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        minimumSize: const Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => CourseIntroScreen(
-              phobia: phobia,
-              difficulty: level.toLowerCase(),
+      builder: (BuildContext bc) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(25.0)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                offset: const Offset(0, -5),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF7B8EF7).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.psychology,
+                        color: Color(0xFF7B8EF7),
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        'Choose Difficulty for ${phobia.name}',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF7B8EF7),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close, color: Colors.grey),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                _buildStyledDifficultyButton(
+                  context,
+                  'Easy',
+                  'Perfect for beginners',
+                  Icons.sentiment_very_satisfied,
+                  const Color(0xFF4CAF50),
+                  const Color(0xFF81C784),
+                  phobia,
+                ),
+                const SizedBox(height: 12),
+                _buildStyledDifficultyButton(
+                  context,
+                  'Medium',
+                  'Balanced challenge',
+                  Icons.sentiment_satisfied,
+                  const Color(0xFFFF9800),
+                  const Color(0xFFFFB74D),
+                  phobia,
+                ),
+                const SizedBox(height: 12),
+                _buildStyledDifficultyButton(
+                  context,
+                  'Hard',
+                  'Maximum exposure',
+                  Icons.sentiment_dissatisfied,
+                  const Color(0xFFF44336),
+                  const Color(0xFFE57373),
+                  phobia,
+                ),
+                const SizedBox(height: 24),
+                Center(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         );
       },
-      child: Text(
-        level,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+    );
+  }
+
+  Widget _buildStyledDifficultyButton(
+    BuildContext context,
+    String level,
+    String subtitle,
+    IconData icon,
+    Color startColor,
+    Color endColor,
+    Phobia phobia,
+  ) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CourseIntroScreen(
+                phobia: phobia,
+                difficulty: level.toLowerCase(),
+              ),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [startColor, endColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: startColor.withOpacity(0.3),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      level,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white.withOpacity(0.8),
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ),
     );
