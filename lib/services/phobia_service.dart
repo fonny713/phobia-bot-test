@@ -57,6 +57,32 @@ class PhobiaService {
         'Gradually get closer to friendly dogs',
       ],
     ),
+    Phobia(
+      id: '5',
+      name: 'Aviophobia',
+      description: 'Fear of flying',
+      imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      therapySteps: [
+        'Learn about aviation safety',
+        'View airport environments',
+        'Look at aircraft pictures',
+        'Understand flight procedures',
+        'Practice relaxation techniques',
+      ],
+    ),
+    Phobia(
+      id: '6',
+      name: 'Glossophobia',
+      description: 'Fear of public speaking',
+      imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+      therapySteps: [
+        'Practice in front of a mirror',
+        'Speak to small groups',
+        'Learn breathing techniques',
+        'Visualize successful presentations',
+        'Gradually increase audience size',
+      ],
+    ),
   ];
 
   static Future<List<Phobia>> getPhobias() async {

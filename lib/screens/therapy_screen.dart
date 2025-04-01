@@ -140,6 +140,123 @@ class _TherapyScreenState extends State<TherapyScreen> {
             'type': 'exposure',
           },
         ];
+      case 'flying':
+        return [
+          {
+            'title': 'Understanding Air Travel',
+            'description': 'Learn about modern aviation safety and statistics. Air travel is one of the safest modes of transportation.',
+            'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'info',
+          },
+          {
+            'title': 'Airport Environment',
+            'description': 'Look at pictures of airport terminals and boarding areas. Familiarize yourself with the environment.',
+            'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Small Aircraft',
+            'description': 'View pictures of small aircraft and private jets. These are often less intimidating than large commercial planes.',
+            'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Safety Features',
+            'description': 'Learn about aircraft safety features and emergency procedures. Understanding these can help reduce anxiety.',
+            'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'info',
+          },
+          {
+            'title': 'Commercial Aircraft',
+            'description': 'Look at pictures of commercial aircraft interiors. Notice the spacious and comfortable environment.',
+            'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Takeoff and Landing',
+            'description': 'View videos and images of takeoff and landing procedures. These are normal parts of air travel.',
+            'image': 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+        ];
+      case 'public speaking':
+        return [
+          {
+            'title': 'Understanding Public Speaking',
+            'description': 'Learn about common fears in public speaking and proven techniques to overcome them.',
+            'image': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'info',
+          },
+          {
+            'title': 'Small Groups',
+            'description': 'Practice speaking in front of a mirror. This is a safe way to start building confidence.',
+            'image': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Friendly Audience',
+            'description': 'Imagine speaking to a small, friendly audience. Visualize their supportive reactions.',
+            'image': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Speaking Techniques',
+            'description': 'Learn breathing and relaxation techniques to manage anxiety while speaking.',
+            'image': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'info',
+          },
+          {
+            'title': 'Medium Audience',
+            'description': 'Visualize speaking to a medium-sized audience. Focus on maintaining eye contact.',
+            'image': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Large Audience',
+            'description': 'Imagine speaking to a large audience. Remember that most people are supportive.',
+            'image': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+        ];
+      case 'claustrophobia':
+        return [
+          {
+            'title': 'Understanding Claustrophobia',
+            'description': 'Learn about claustrophobia and common triggers. Understanding your fear is the first step to overcoming it.',
+            'image': 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'info',
+          },
+          {
+            'title': 'Open Spaces',
+            'description': 'Look at pictures of open, spacious areas. Notice how they make you feel.',
+            'image': 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Small Rooms',
+            'description': 'View pictures of small, well-lit rooms. Notice that they can be comfortable and safe.',
+            'image': 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Coping Strategies',
+            'description': 'Learn breathing techniques and mental strategies to manage anxiety in confined spaces.',
+            'image': 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'info',
+          },
+          {
+            'title': 'Elevators',
+            'description': 'Look at pictures of elevators. Notice their safety features and emergency options.',
+            'image': 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+          {
+            'title': 'Confined Spaces',
+            'description': 'View pictures of various confined spaces. Remember that you can always leave if needed.',
+            'image': 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            'type': 'exposure',
+          },
+        ];
       default:
         return [
           {
