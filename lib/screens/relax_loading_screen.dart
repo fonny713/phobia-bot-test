@@ -70,7 +70,7 @@ class _RelaxLoadingScreenState extends State<RelaxLoadingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: const Color(0xFFF5F7FA),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -81,19 +81,26 @@ class _RelaxLoadingScreenState extends State<RelaxLoadingScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Ładowanie relaksu...",
+                    "Preparing Relaxation Session",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black54,
+                      color: Color(0xFF7B8EF7),
                     ),
                   ),
                   const SizedBox(height: 24),
                   Container(
                     height: 16,
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade100.withOpacity(0.3),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: Stack(
                       children: [
@@ -102,14 +109,14 @@ class _RelaxLoadingScreenState extends State<RelaxLoadingScreen>
                           child: Container(
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
-                                colors: [Color(0xFF81D4FA), Color(0xFF0288D1)],
+                                colors: [Color(0xFF7B8EF7), Color(0xFF6E7FF3)],
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
                               ),
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.lightBlueAccent.withOpacity(0.6),
+                                  color: const Color(0xFF7B8EF7).withOpacity(0.3),
                                   blurRadius: 10,
                                   spreadRadius: 1,
                                 ),
