@@ -8,12 +8,71 @@ import 'firebase_options.dart' as firebase_options;
 import 'screens/registration_screen.dart';
 import 'screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/breathing_screen.dart';
+import 'screens/phobia_list_screen.dart';
+import 'screens/exposure_difficulty_screen.dart';
+import 'screens/exposure_therapy_screen.dart';
+import 'services/firebase_storage_service.dart';
+
+// Global variable to track Firebase initialization status
+bool _firebaseInitialized = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: firebase_options.DefaultFirebaseOptions.currentPlatform,
-  );
+  
+  // Initialize Firebase with error handling
+  try {
+    print('Starting Firebase initialization...');
+    await Firebase.initializeApp(
+      options: firebase_options.DefaultFirebaseOptions.currentPlatform,
+    );
+    print('Firebase core initialized successfully');
+    
+    // Configure Firebase Storage to retry failed operations
+    print('Configuring Firebase Storage retry settings...');
+    FirebaseStorage.instance.setMaxOperationRetryTime(const Duration(seconds: 5));
+    FirebaseStorage.instance.setMaxUploadRetryTime(const Duration(seconds: 5));
+    FirebaseStorage.instance.setMaxDownloadRetryTime(const Duration(seconds: 5));
+    print('Firebase Storage retry settings configured');
+    
+    // Try to sign in anonymously if no user is signed in
+    if (FirebaseAuth.instance.currentUser == null) {
+      try {
+        print('No user signed in, attempting anonymous sign-in...');
+        await FirebaseAuth.instance.signInAnonymously();
+        print('Anonymous sign-in successful');
+      } catch (e) {
+        print('Anonymous sign-in failed: $e');
+        // Continue anyway, as some operations might work without auth
+      }
+    } else {
+      print('User already signed in: ${FirebaseAuth.instance.currentUser!.uid}');
+    }
+    
+    _firebaseInitialized = true;
+    print('Firebase initialized successfully');
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+    print('Stack trace: ${StackTrace.current}');
+    _firebaseInitialized = false;
+  }
+  
+  // Initialize FirebaseStorageService with error handling
+  if (_firebaseInitialized) {
+    try {
+      print('Initializing FirebaseStorageService...');
+      await FirebaseStorageService.initialize();
+      print('FirebaseStorageService initialized successfully');
+    } catch (e) {
+      print('Error initializing FirebaseStorageService: $e');
+      print('Stack trace: ${StackTrace.current}');
+    }
+  } else {
+    print('Skipping FirebaseStorageService initialization due to Firebase initialization failure');
+  }
+  
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
@@ -88,24 +147,38 @@ class MyApp extends StatelessWidget {
         themeMode: themeProvider.themeMode,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            
-            if (snapshot.hasData) {
-              return FadeTransitionSwitcher(
-                child: const HomeScreen(key: ValueKey('homeScreen')),
-              );
-            }
-            
-            return FadeTransitionSwitcher(
-              child: const LoginScreen(key: ValueKey('loginScreen')),
+        home: _firebaseInitialized 
+          ? StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                
+                if (snapshot.hasData) {
+                  return FadeTransitionSwitcher(
+                    child: const HomeScreen(key: ValueKey('homeScreen')),
+                  );
+                }
+                
+                return FadeTransitionSwitcher(
+                  child: const LoginScreen(key: ValueKey('loginScreen')),
+                );
+              },
+            )
+          : const HomeScreen(), // Fallback to HomeScreen if Firebase isn't initialized
+        initialRoute: '/',
+        routes: {
+          '/breathing': (context) => const BreathingScreen(),
+          '/phobia_list': (context) => const PhobiaListScreen(),
+          '/exposure_difficulty': (context) {
+            final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+            return ExposureDifficultyScreen(
+              phobiaId: args['phobiaId'],
+              phobiaName: args['phobiaName'],
             );
           },
-        ),
+        },
       ),
     );
   }

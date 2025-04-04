@@ -4,7 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../models/phobia.dart';
 import '../services/phobia_service.dart';
-import 'course_intro_screen.dart';
+import 'phobia_list_screen.dart';
+import 'exposure_difficulty_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -264,9 +265,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => CourseIntroScreen(
-                                            phobia: phobia,
-                                            difficulty: nextDifficulty,
+                                          builder: (context) => ExposureDifficultyScreen(
+                                            phobiaId: phobia.id,
+                                            phobiaName: phobia.name,
                                           ),
                                         ),
                                       );
@@ -334,13 +335,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Color _getDifficultyColor(String difficulty) {
     switch (difficulty.toLowerCase()) {
       case 'easy':
-        return const Color(0xFF4CAF50);
+        return const Color(0xFF4CAF50); // Green
       case 'medium':
-        return const Color(0xFFFF9800);
+        return const Color(0xFFFF9800); // Orange
       case 'hard':
-        return const Color(0xFFf44336);
+        return const Color(0xFFF44336); // Red
       default:
-        return const Color(0xFF2196F3);
+        return const Color(0xFF2196F3); // Blue
     }
   }
 } 

@@ -3,7 +3,6 @@ import 'dart:convert';
 import '../models/phobia.dart';
 
 class PhobiaService {
-  static const String _favoritesKey = 'favorites';
   static final List<Phobia> _defaultPhobias = [
     Phobia(
       id: '1',
@@ -103,20 +102,6 @@ class PhobiaService {
     }
   }
 
-  static Future<List<Phobia>> getFavoritePhobias() async {
-    final phobias = await getPhobias();
-    return phobias.where((phobia) => phobia.isFavorite).toList();
-  }
-
-  static Future<void> toggleFavorite(Phobia phobia) async {
-    final phobias = await getPhobias();
-    final index = phobias.indexWhere((p) => p.id == phobia.id);
-    if (index != -1) {
-      phobias[index].isFavorite = !phobias[index].isFavorite;
-      await _savePhobias(phobias);
-    }
-  }
-
   static Future<List<Phobia>> getCompletedPhobias() async {
     final prefs = await SharedPreferences.getInstance();
     final allPhobias = await getPhobias();
@@ -148,16 +133,6 @@ class PhobiaService {
     final prefs = await SharedPreferences.getInstance();
     final phobiasJson = json.encode(phobias.map((p) => p.toJson()).toList());
     await prefs.setString('phobias', phobiasJson);
-  }
-
-  static Future<List<String>> getFavoriteIds() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(_favoritesKey) ?? [];
-  }
-
-  static Future<bool> isFavorite(String phobiaId) async {
-    final favorites = await getFavoriteIds();
-    return favorites.contains(phobiaId);
   }
 
   static Future<List<String>> getCompletedDifficulties(String phobiaName) async {

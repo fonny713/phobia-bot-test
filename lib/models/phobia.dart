@@ -4,7 +4,6 @@ class Phobia {
   final String description;
   final String imageUrl;
   final List<String> therapySteps;
-  bool isFavorite;
 
   Phobia({
     required this.id,
@@ -12,7 +11,6 @@ class Phobia {
     required this.description,
     required this.imageUrl,
     required this.therapySteps,
-    this.isFavorite = false,
   });
 
   Map<String, dynamic> toJson() {
@@ -22,7 +20,6 @@ class Phobia {
       'description': description,
       'imageUrl': imageUrl,
       'therapySteps': therapySteps,
-      'isFavorite': isFavorite,
     };
   }
 
@@ -33,7 +30,6 @@ class Phobia {
       description: json['description'],
       imageUrl: json['imageUrl'],
       therapySteps: List<String>.from(json['therapySteps']),
-      isFavorite: json['isFavorite'] ?? false,
     );
   }
 } 

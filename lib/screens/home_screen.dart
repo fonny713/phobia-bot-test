@@ -1,6 +1,5 @@
 import 'dart:ui'; // potrzebne do BackdropFilter
 import 'package:flutter/material.dart';
-import 'package:phobia_app/screens/exposure_loading_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:phobia_app/theme_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,15 +7,15 @@ import 'journal_screen.dart';
 import 'info_screen.dart';
 import 'relax_loading_screen.dart';
 import 'calendar_screen.dart';
-import 'favorites_screen.dart';
+import 'phobia_list_screen.dart';
+import 'exposure_difficulty_screen.dart';
 import '../services/phobia_service.dart';
 import '../models/phobia.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'phobia_list_screen.dart';
 import 'profile_screen.dart';
-import 'course_intro_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -319,79 +318,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // Main Content (including Favorites)
+            // Main Content
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Favorites Section
-                    const Text(
-                      'Favorites',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: 100,
-                      child: FutureBuilder<List<Phobia>>(
-                        future: PhobiaService.getFavoritePhobias(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return const Center(
-                              child: Text(
-                                'Add your favorite phobias for quick access',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            );
-                          }
-                          return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              final phobia = snapshot.data![index];
-                              return Card(
-                                margin: const EdgeInsets.only(right: 10),
-                                color: const Color(0xFF7B8EF7),
-                                child: InkWell(
-                                  onTap: () {
-                                    _showDifficultyDialog(context, phobia);
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.psychology,
-                                          color: Colors.white,
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          phobia.name,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 30),
                     // Start Your Journey Section
                     const Text(
                       'Start Your Journey',
@@ -480,11 +413,6 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(builder: (_) => const ProfileScreen()),
             );
-          } else if (index == 2) { // Favorites
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const FavoritesScreen()),
-            );
           }
         },
         items: const [
@@ -495,10 +423,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
           ),
         ],
         selectedItemColor: const Color(0xFF7B8EF7),
@@ -632,9 +556,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => CourseIntroScreen(
-                phobia: phobia,
-                difficulty: level.toLowerCase(),
+              builder: (_) => ExposureDifficultyScreen(
+                phobiaId: phobia.id,
+                phobiaName: phobia.name,
               ),
             ),
           );
